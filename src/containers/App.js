@@ -1,30 +1,34 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import Api from '../api';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: ''
-    }
+      user: {
+        username: '',
+        email: '',
+      },
+      data: '',
+    };
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData('hongducphan', '123456');
   }
 
-  fetchData = () => {
-    Axios.get('http://localhost:8080/test').then(res => {
-      this.setState({
-        data: res.data
-      })
-    })
-  }
+  fetchData = (username, password) => {
+    Api.login(username, password).then(res => {
+      if (res.status === 200) {
+        this.setState({
+          data: res.data,
+        });
+      }
+    });
+  };
 
   render() {
-    return (
-      <h1>{this.state.data}</h1>
-    );
+    return <h1>{this.state.data}</h1>;
   }
 }
 
