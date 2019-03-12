@@ -11,6 +11,7 @@ class Login extends Component {
       password: '',
       redirect: false,
       error: '',
+      usernameResult: '',
     };
   }
 
@@ -31,6 +32,7 @@ class Login extends Component {
       if (res.data === username) {
         this.setState({
           redirect: true,
+          usernameResult: username,
         });
       } else {
         this.setState({
@@ -42,7 +44,14 @@ class Login extends Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to="/home" />;
+      return (
+        <Redirect
+          to={{
+            pathname: '/home',
+            state: { username: this.state.usernameResult },
+          }}
+        />
+      );
     }
   };
 
