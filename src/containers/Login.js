@@ -28,7 +28,7 @@ class Login extends Component {
 
   login = (username, password) => {
     Api.login(username, password).then(res => {
-      if (res.data) {
+      if (res.data === username) {
         this.setState({
           redirect: true,
         });
